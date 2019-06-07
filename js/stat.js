@@ -28,10 +28,18 @@ var getMaxElement = function (arr) {
   return maxElement;
 };
 
+//  Задаем цвет бара в зависимости от имени игрока
+var fillBarColor = function (playerName) {
+  var randomOpacity = (Math.random() * (1 - 0.1));
+  if (playerName === 'Вы') {
+    return 'rgba(255, 0, 0, 1)';
+  }
+  return 'rgba(0, 0, 255, ' + randomOpacity + ')';
+};
+
 window.renderStatistics = function (ctx, players, times) {
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)');
   renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
-
   ctx.fillStyle = '#000';
   ctx.font = '16px PT Mono';
   ctx.fillText('Ура вы победили!', CLOUD_X + FONT_GAP, 45);
@@ -39,21 +47,11 @@ window.renderStatistics = function (ctx, players, times) {
 
   var maxTime = getMaxElement(times);
 
-  //  Выводим значения скорости  и именя игроков
+  //  Выводим значения скорости  и имена игроков
   for (var i = 0; i < players.length; i++) {
     ctx.fillText(Math.floor(times[i]), CLOUD_X + GAP + FONT_GAP + (BAR_GAP + BAR_WIDTH) * i, (CLOUD_HEIGHT - (BAR_HEIGHT * times[i]) / maxTime) - 35);
     ctx.fillText(players[i], CLOUD_X + GAP + FONT_GAP + (BAR_GAP + BAR_WIDTH) * i, CLOUD_HEIGHT - GAP);
   }
-
-  //  Задаем цвет бара в зависимости от имен игрока
-  var fillBarColor = function () {
-    var randomOpacity = (Math.random() * (1 - 0.1));
-    if (players[j] === 'Вы') {
-      ctx.fillStyle = 'rgba(255, 0, 0, 1)';
-    } else {
-      ctx.fillStyle = 'rgba(0, 0, 255, ' + randomOpacity + ')';
-    }
-  };
 
   ctx.scale(1, -1);
   ctx.translate(0, -270);
