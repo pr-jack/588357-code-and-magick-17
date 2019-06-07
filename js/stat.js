@@ -46,9 +46,9 @@ window.renderStatistics = function (ctx, players, times) {
   }
 
   //  Задаем цвет бара в зависимости от имен игрока
-  var fillBarColor = function (players) {
+  var fillBarColor = function () {
     var randomOpacity = (Math.random() * (1 - 0.1));
-    if (players[i] === 'Вы') {
+    if (players[j] === 'Вы') {
       ctx.fillStyle = 'rgba(255, 0, 0, 1)';
     } else {
       ctx.fillStyle = 'rgba(0, 0, 255, ' + randomOpacity + ')';
@@ -59,8 +59,8 @@ window.renderStatistics = function (ctx, players, times) {
   ctx.translate(0, -270);
 
   //  Выводим бары
-  for (var i = 0; i < players.length; i++) {
-    ctx.fillStyle = fillBarColor(players);
-    ctx.fillRect(CLOUD_X + GAP + TEXT_WIDTH + (BAR_GAP + BAR_WIDTH) * i, CLOUD_Y + GAP * 2, BAR_WIDTH, (BAR_HEIGHT * times[i]) / maxTime);
+  for (var j = 0; j < players.length; j++) {
+    ctx.fillStyle = fillBarColor(players[j]);
+    ctx.fillRect(CLOUD_X + GAP + TEXT_WIDTH + (BAR_GAP + BAR_WIDTH) * j, CLOUD_Y + GAP * 2, BAR_WIDTH, (BAR_HEIGHT * times[j]) / maxTime);
   }
 };
