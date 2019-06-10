@@ -43,41 +43,23 @@ var eyesColors = [
   'yellow',
   'green'
 ];
-// Функция выбора имени
-var getRandomNames = function () {
-  var randomNames = Math.floor((Math.random() * (1 - names.length) + names.length));
-  return randomNames;
-};
-
-// Функция выбора фамилии
-var getRandomSurnames = function () {
-  var randomSurnames = Math.floor((Math.random() * (1 - surnames.length) + surnames.length));
-  return randomSurnames;
-};
-
-// Функция выбора цвета мантии
-var getRandomCoatColors = function () {
-  var randomCoatColors = Math.floor((Math.random() * (1 - coatColors.length) + coatColors.length));
-  return randomCoatColors;
-};
-
-// Функция выбора цвета глаз
-var getRandomEyesColors = function () {
-  var randomEyesColors = Math.floor((Math.random() * (1 - eyesColors.length) + eyesColors.length));
-  return randomEyesColors;
+// Функция выбора случайного числа
+var getRandomItem = function (count) {
+  var randomItem = Math.floor((Math.random() * (1 - count) + count));
+  return randomItem;
 };
 
 // Функция описания похожих персоонажей
-var getWizards = function (length) {
-  var wizardsObject = [];
-  for (var i = 0; i < length; i++) {
-    wizardsObject.push({
-      name: names[getRandomNames()] + ' ' + surnames[getRandomSurnames()],
-      coatColor: coatColors[getRandomCoatColors()],
-      eyesColor: eyesColors[getRandomEyesColors()]
+var getWizards = function (count) {
+  var wizards = [];
+  for (var i = 0; i < count; i++) {
+    wizards.push({
+      name: names[getRandomItem(names.length)] + ' ' + surnames[getRandomItem(surnames.length)],
+      coatColor: coatColors[getRandomItem(coatColors.length)],
+      eyesColor: eyesColors[getRandomItem(eyesColors.length)]
     });
   }
-  return wizardsObject;
+  return wizards;
 };
 
 var wizards = getWizards(NUMBER_OF_WIZARDS);
@@ -85,6 +67,8 @@ var wizards = getWizards(NUMBER_OF_WIZARDS);
 var similarWizardTemplate = document.querySelector('#similar-wizard-template')
     .content
     .querySelector('.setup-similar-item');
+var similarListElement = setup.querySelector('.setup-similar-list');
+var fragment = document.createDocumentFragment();
 
 var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
@@ -96,9 +80,6 @@ var renderWizard = function (wizard) {
   return wizardElement;
 };
 
-var similarListElement = setup.querySelector('.setup-similar-list');
-
-var fragment = document.createDocumentFragment();
 for (var i = 0; i < wizards.length; i++) {
   fragment.appendChild(renderWizard(wizards[i]));
 }
